@@ -1,16 +1,22 @@
 {
 	"name": "react-native-custom-android-webview",
-	"version": "1.0.3",
+	"version": "1.0.4",
+	"url": "https://github.com/ovotech/react-native-custom-android-webview",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [
-		"react-native"
+		"react-native",
+		"android",
+		"webview",
+		"pdf",
+		"custom tabs",
+		"external"
 	],
-	"author": "Daniel Choudhury",
-	"license": "",
+	"author": "OVO Energy Superfriends",
+	"license": "MIT",
 	"peerDependencies": {
 		"react-native": "^0.47.x"
 	}
