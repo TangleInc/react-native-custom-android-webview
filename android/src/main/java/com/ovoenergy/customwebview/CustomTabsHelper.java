@@ -1,4 +1,4 @@
-package com.ovoenergy.filteringwebview;
+package com.ovoenergy.customwebview;
 
 
 import android.content.Context;

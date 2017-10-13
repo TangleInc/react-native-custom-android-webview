@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-package com.ovoenergy.filteringwebview;
+package com.ovoenergy.customwebview;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -91,11 +91,11 @@ import java.util.Map;
  */
 
 
-@ReactModule(name = FilteringWebViewManager.REACT_CLASS)
-public class FilteringWebViewManager extends SimpleViewManager<WebView> {
+@ReactModule(name = CustomWebViewManager.REACT_CLASS)
+public class CustomWebViewManager extends SimpleViewManager<WebView> {
 
     //@MARK Modified
-    protected static final String REACT_CLASS = "RNFilteringWebView";
+    protected static final String REACT_CLASS = "RNCustomWebView";
 
     private static final String HTML_ENCODING = "UTF-8";
     private static final String HTML_MIME_TYPE = "text/html; charset=utf-8";
@@ -351,14 +351,14 @@ public class FilteringWebViewManager extends SimpleViewManager<WebView> {
         }
     }
 
-    public FilteringWebViewManager() {
+    public CustomWebViewManager() {
         mWebViewConfig = new WebViewConfig() {
             public void configWebView(WebView webView) {
             }
         };
     }
 
-    public FilteringWebViewManager(WebViewConfig webViewConfig) {
+    public CustomWebViewManager(WebViewConfig webViewConfig) {
         mWebViewConfig = webViewConfig;
     }
 

@@ -1,6 +1,6 @@
-package com.ovoenergy.filteringwebview;
+package com.ovoenergy.customwebview;
 
-import com.ovoenergy.filteringwebview.FilteringHelper;
+import com.ovoenergy.customwebview.FilteringHelper;
 
 import org.junit.Assert;
 import org.junit.Before;

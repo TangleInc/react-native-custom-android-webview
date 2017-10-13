@@ -1,4 +1,4 @@
-package com.ovoenergy.filteringwebview;
+package com.ovoenergy.customwebview;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -32,7 +32,14 @@ public class WebDownloader {
         final Uri uri = Uri.parse(url);
         final DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         final String cookies = CookieManager.getInstance().getCookie(url);
-        final String fileName = String.format("download.%s", MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType));
+        String filePostfix = "";
+
+        // @TODO add prop to toggle this behaviour
+        if (true) {
+            filePostfix = filePostfix + "_" + System.currentTimeMillis();
+        }
+
+        final String fileName = String.format("%s%s.%s", uri.getLastPathSegment(), filePostfix, MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType));
 
         FLog.d(ReactConstants.TAG, "Downloading File SRC URI: " + uri);
         FLog.d(ReactConstants.TAG, "Downloading Filename    : " + fileName);
@@ -49,7 +56,7 @@ public class WebDownloader {
         request.allowScanningByMediaScanner();
 
         Toast successToast = Toast.makeText(context, "Downloading file", Toast.LENGTH_SHORT);
-        Toast errorToast = Toast.makeText(context, "Error downloading file", Toast.LENGTH_SHORT);
+        Toast errorToast = Toast.makeText(context, "Error downloading file", Toast.LENGTH_LONG);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
