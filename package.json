@@ -1,6 +1,6 @@
 {
 	"name": "react-native-custom-android-webview",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"url": "https://github.com/ovotech/react-native-custom-android-webview",
 	"description": "",
 	"main": "index.js",
@@ -15,6 +15,10 @@
 		"custom tabs",
 		"external"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ovotech/react-native-custom-android-webview"
+	},
 	"author": "OVO Energy Superfriends",
 	"license": "MIT",
 	"peerDependencies": {
