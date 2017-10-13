@@ -11,7 +11,7 @@
 2. Append the following lines to `android/settings.gradle`:
   	```
   	include ':react-native-filtering-web-view'
-  	project(':react-native-filtering-web-view').projectDir = new File(rootProject.projectDir, 	'../libs/DannyView/android')
+  	project(':react-native-filtering-web-view').projectDir = new File(rootProject.projectDir, '../libs/FOLDER_NAME/android')
   	```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
   	```

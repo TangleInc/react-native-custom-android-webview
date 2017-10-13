@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
 package com.ovoenergy.filteringwebview;
 
 import android.content.ActivityNotFoundException;
@@ -53,6 +62,27 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+/**
+ * Manages instances of {@link WebView}
+ *
+ * Can accept following commands:
+ *  - GO_BACK
+ *  - GO_FORWARD
+ *  - RELOAD
+ *
+ * {@link WebView} instances could emit following direct events:
+ *  - topLoadingFinish
+ *  - topLoadingStart
+ *  - topLoadingError
+ *
+ * Each event will carry the following properties:
+ *  - target - view's react tag
+ *  - url - url set for the webview
+ *  - loading - whether webview is in a loading state
+ *  - title - title of the current page
+ *  - canGoBack - boolean, whether there is anything on a history stack to go back
+ *  - canGoForward - boolean, whether it is possible to request GO_FORWARD command
 
 /**
  * This is a copy of ReactWebViewManager, with customisations.
