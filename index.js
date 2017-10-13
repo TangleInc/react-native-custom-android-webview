@@ -15,6 +15,25 @@ const resolveAssetSource = ReactNative.Image.resolveAssetSource;
 
 const RCT_WEBVIEW_REF = 'webview';
 
+function deprecatedPropType(
+  propType: any,
+  explanation: string
+): any {
+  return function validate(props, propName, componentName, ...rest) {
+    // Don't warn for native components.
+    if (!UIManager[componentName] && props[propName] !== undefined) {
+      console.warn(`\`${propName}\` supplied to \`${componentName}\` has been deprecated. ${explanation}`);
+    }
+
+    return propType(
+      props,
+      propName,
+      componentName,
+      ...rest
+    );
+  };
+}
+
 const WebViewState = keyMirror({
   IDLE: null,
   LOADING: null,
