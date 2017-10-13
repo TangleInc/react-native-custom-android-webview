@@ -27,23 +27,23 @@ npm install react-native-custom-android-webview
 #### Step 2: Setup Android Project
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.ovoenergy.filteringwebview.FilteringWebViewPackage;` to the imports at the top of the file
-  - Add `new RNFilteringWebView()` to the list returned by the `getPackages()` method
+  - Add `import com.ovoenergy.customwebview.CustomWebViewPackage;` to the imports at the top of the file
+  - Add `new CustomWebViewPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
-		include ‘:react-native-custom-android-webview’
-		project(‘:react-native-custom-android-webview’).projectDir = new File(rootProject.projectDir, ‘../node_modules/react-native-custom-android-webview/android’)
+		include ':react-native-custom-android-webview'
+project(':react-native-custom-android-webview').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-custom-android-webview/android')
 		```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
   	```
-      compile project(':react-native-filtering-web-view')
+			compile project(':react-native-custom-android-webview')
   	```
 
 ## Usage
 ```javascript
-import FilteringWebView from 'PATH/TO/FilteringWebView';
+import CustomWebView from 'react-native-custom-android-webview';
 
-<FilteringWebView
+<CustomWebView
 	...standardWebViewProps
 	openInternally={['google.com', 'facebook.com', 'app.facebook.com']}
 />;
