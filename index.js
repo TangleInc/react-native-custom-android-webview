@@ -32,6 +32,14 @@ const defaultRenderLoading = () =>
  * Renders a native WebView.
  */
 class WebView extends React.Component {
+  static get extraNativeComponentConfig() {
+    return {
+      nativeOnly: {
+        messagingEnabled: PropTypes.bool,
+      },
+    };
+  }
+
   static propTypes = {
     ...ViewPropTypes,
     renderError: PropTypes.func,
@@ -176,11 +184,41 @@ class WebView extends React.Component {
      */
 		saveFormDataDisabled: PropTypes.bool,
 
-		// New prop to set whitelist of domains to open internally in webview
-		openInternally: PropTypes.array,
 
-		// Custom tab toolbar colour
-		toolbarColour: PropTypes.string
+    // New prop to set whitelist of domains to open internally in webview
+    openInternally: PropTypes.array,
+
+    // Custom tab toolbar colour
+    toolbarColour: PropTypes.string,
+
+    /**
+     * Override the native component used to render the WebView. Enables a custom native
+     * WebView which uses the same JavaScript as the original WebView.
+     */
+    nativeConfig: PropTypes.shape({
+      /*
+       * The native component used to render the WebView.
+       */
+      component: PropTypes.any,
+      /*
+       * Set props directly on the native component WebView. Enables custom props which the
+       * original WebView doesn't pass through.
+       */
+      props: PropTypes.object,
+      /*
+       * Set the ViewManager to use for communcation with the native side.
+       * @platform ios
+       */
+      viewManager: PropTypes.object
+    }),
+    /*
+     * Used on Android only, controls whether the given list of URL prefixes should
+     * make {@link com.facebook.react.views.webview.ReactWebViewClient} to launch a
+     * default activity intent for those URL instead of loading it within the webview.
+     * Use this to list URLs that WebView cannot handle, e.g. a PDF url.
+     * @platform android
+     */
+    urlPrefixesForDefaultIntent: PropTypes.arrayOf(PropTypes.string),
   };
 
   static defaultProps = {
@@ -246,8 +284,12 @@ class WebView extends React.Component {
       console.warn('WebView: `source.body` is not supported when using GET.');
     }
 
+    const nativeConfig = this.props.nativeConfig || {};
+
+    let NativeWebView = nativeConfig.component || RNFilteringWebView;
+
     const webView = (
-      <RNFilteringWebView
+      <NativeWebView
         ref={RCT_WEBVIEW_REF}
         key="webViewKey"
         style={webViewStyles}
@@ -276,9 +318,11 @@ class WebView extends React.Component {
           this.props.allowUniversalAccessFromFileURLs
         }
         mixedContentMode={this.props.mixedContentMode}
-				saveFormDataDisabled={this.props.saveFormDataDisabled}
-				openInternally={this.props.openInternally}
-				toolbarColour={this.props.toolbarColour}
+        saveFormDataDisabled={this.props.saveFormDataDisabled}
+        urlPrefixesForDefaultIntent={this.props.urlPrefixesForDefaultIntent}
+        openInternally={this.props.openInternally}
+        toolbarColour={this.props.toolbarColour}
+        {...nativeConfig.props}
       />
     );
 
@@ -307,6 +351,9 @@ class WebView extends React.Component {
   };
 
   reload = () => {
+    this.setState({
+      viewState: WebViewState.LOADING
+    });
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
       UIManager.RCTWebView.Commands.reload,
@@ -331,11 +378,11 @@ class WebView extends React.Component {
   };
 
   /**
-  * Injects a javascript string into the referenced WebView. Deliberately does not
-  * return a response because using eval() to return a response breaks this method
-  * on pages with a Content Security Policy that disallows eval(). If you need that
-  * functionality, look into postMessage/onMessage.
-  */
+   * Injects a javascript string into the referenced WebView. Deliberately does not
+   * return a response because using eval() to return a response breaks this method
+   * on pages with a Content Security Policy that disallows eval(). If you need that
+   * functionality, look into postMessage/onMessage.
+   */
   injectJavaScript = data => {
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
@@ -392,13 +439,9 @@ class WebView extends React.Component {
   };
 }
 
-const RNFilteringWebView = requireNativeComponent('RNFilteringWebView', WebView, {
-  nativeOnly: {
-    messagingEnabled: PropTypes.bool
-  }
-});
+const RNFilteringWebView = requireNativeComponent('RNFilteringWebView', WebView, WebView.extraNativeComponentConfig);
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1
   },

@@ -32,7 +32,7 @@ public class WebDownloader {
         final Uri uri = Uri.parse(url);
         final DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         final String cookies = CookieManager.getInstance().getCookie(url);
-        final String fileName = String.format("OVO_%s.%s", uri.getLastPathSegment(), MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType));
+        final String fileName = String.format("download.%s", MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType));
 
         FLog.d(ReactConstants.TAG, "Downloading File SRC URI: " + uri);
         FLog.d(ReactConstants.TAG, "Downloading Filename    : " + fileName);
