@@ -1,19 +1,17 @@
 /* eslint-disable */
 
-const EdgeInsetsPropType = require('EdgeInsetsPropType');
-const ActivityIndicator = require('ActivityIndicator');
-const React = require('React');
+const ReactNative = require('react-native');
+const React = require('react');
 const PropTypes = require('prop-types');
-const ReactNative = require('ReactNative');
-const StyleSheet = require('StyleSheet');
-const UIManager = require('UIManager');
-const View = require('View');
-const ViewPropTypes = require('ViewPropTypes');
-
-const deprecatedPropType = require('deprecatedPropType');
 const keyMirror = require('fbjs/lib/keyMirror');
-const requireNativeComponent = require('requireNativeComponent');
-const resolveAssetSource = require('resolveAssetSource');
+const EdgeInsetsPropType = ReactNative.EdgeInsetsPropType;
+const ActivityIndicator = ReactNative.ActivityIndicator;
+const StyleSheet = ReactNative.StyleSheet;
+const UIManager = ReactNative.UIManager;
+const View = ReactNative.View;
+const ViewPropTypes = ReactNative.ViewPropTypes;
+const requireNativeComponent = ReactNative.requireNativeComponent;
+const resolveAssetSource = ReactNative.Image.resolveAssetSource;
 
 const RCT_WEBVIEW_REF = 'webview';
 
