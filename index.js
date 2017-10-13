@@ -15,10 +15,10 @@ const resolveAssetSource = ReactNative.Image.resolveAssetSource;
 
 const RCT_WEBVIEW_REF = 'webview';
 
-function deprecatedPropType(
+const deprecatedPropType = (
   propType: any,
   explanation: string
-): any {
+): any => {
   return function validate(props, propName, componentName, ...rest) {
     // Don't warn for native components.
     if (!UIManager[componentName] && props[propName] !== undefined) {
