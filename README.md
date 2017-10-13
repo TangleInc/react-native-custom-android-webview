@@ -1,11 +1,10 @@
 
 # react-native-custom-android-webview
-**Note:** Android only
 Fork of the react-native webview that adds a couple new functions:
-
 1. Ability to pass in an array of hostnames to open in a custom chrome tab
 2. Ability to download PDFs / ZIPs / etc. automatically
 
+**Note:** Android only
 Supports all the same props as the default react native webview
 
 ### Additional Props
@@ -13,7 +12,7 @@ In addition to usual React Native WebView props:
 
 | Props          | Type            | Notes & Example                                               |
 |----------------|-----------------|---------------------------------------------------------------|
-| openInternally | `Array[string]` | ```['google.com', 'facebook.com', 'app.facebook.com']````     |
+| openInternally | `Array[string]` | ```['google.com', 'facebook.com', 'app.facebook.com']```     |
 | toolbarColour  | `String`        | Hex code value for the toolbarColour on the Chrome custom tab |
 
 
