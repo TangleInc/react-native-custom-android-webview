@@ -125,7 +125,7 @@ class WebView extends React.Component {
 		javaScriptEnabled: PropTypes.bool,
 
 		/**
-		 * Sets text zoom by integer from 1 to 100
+		 * Sets text zoom by integer from 1 to 1000
 		 */
 		textZoom: PropTypes.number,
 
@@ -315,7 +315,7 @@ class WebView extends React.Component {
 				injectedJavaScript={this.props.injectedJavaScript}
 				userAgent={this.props.userAgent}
 				javaScriptEnabled={this.props.javaScriptEnabled}
-				textZoom={Math.min(100, Math.max(1, Math.floor(this.props.textZoom)))}
+				textZoom={Math.min(1000, Math.max(1, Math.floor(this.props.textZoom)))}
 				thirdPartyCookiesEnabled={this.props.thirdPartyCookiesEnabled}
 				domStorageEnabled={this.props.domStorageEnabled}
 				messagingEnabled={typeof this.props.onMessage === 'function'}
