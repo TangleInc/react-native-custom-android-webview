@@ -125,6 +125,11 @@ class WebView extends React.Component {
 		javaScriptEnabled: PropTypes.bool,
 
 		/**
+		 * Sets text zoom by integer from 1 to 1000
+		 */
+		textZoom: PropTypes.number,
+
+		/**
      * Used on Android Lollipop and above only, third party cookies are enabled
      * by default for WebView on Android Kitkat and below and on iOS
      * @platform android
@@ -234,6 +239,7 @@ class WebView extends React.Component {
 
 	static defaultProps = {
 		javaScriptEnabled: true,
+		textZoom: 100,
 		thirdPartyCookiesEnabled: true,
 		scalesPageToFit: true,
 		saveFormDataDisabled: false
@@ -309,6 +315,7 @@ class WebView extends React.Component {
 				injectedJavaScript={this.props.injectedJavaScript}
 				userAgent={this.props.userAgent}
 				javaScriptEnabled={this.props.javaScriptEnabled}
+				textZoom={Math.min(1000, Math.max(1, Math.floor(this.props.textZoom)))}
 				thirdPartyCookiesEnabled={this.props.thirdPartyCookiesEnabled}
 				domStorageEnabled={this.props.domStorageEnabled}
 				messagingEnabled={typeof this.props.onMessage === 'function'}
