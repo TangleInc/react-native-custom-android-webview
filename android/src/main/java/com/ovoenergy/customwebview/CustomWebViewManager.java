@@ -418,6 +418,11 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         view.getSettings().setJavaScriptEnabled(enabled);
     }
 
+    @ReactProp(name = "textZoom")
+    public void setTextZoom(WebView view, int textZoom) {
+        view.getSettings().setTextZoom(textZoom);
+    }
+
     @ReactProp(name = "thirdPartyCookiesEnabled")
     public void setThirdPartyCookiesEnabled(WebView view, boolean enabled) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
