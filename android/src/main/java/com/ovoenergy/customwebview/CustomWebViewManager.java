@@ -596,7 +596,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     public
     @Nullable
     Map<String, Integer> getCommandsMap() {
-        Map<String, Integer> map = MapBuilder.of()
+        Map<String, Integer> map = MapBuilder.of();
 
         map.put("goBack", COMMAND_GO_BACK);
         map.put("goForward", COMMAND_GO_FORWARD);
