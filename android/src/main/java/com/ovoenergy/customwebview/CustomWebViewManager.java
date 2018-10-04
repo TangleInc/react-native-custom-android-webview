@@ -693,7 +693,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     }
 
     public void restoreSoftInputMode() {
-        FLog.d("restore softInputMode: " + this.prevSoftInputMode");
+        FLog.d("restore softInputMode: " + this.prevSoftInputMode);
 
         if (this.prevSoftInputMode != null && this.currentActivity != null) {
             FLog.d("restore softInputMode: actual restore");
