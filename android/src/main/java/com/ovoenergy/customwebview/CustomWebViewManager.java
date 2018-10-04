@@ -235,6 +235,9 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
                             createWebViewEvent(webView, url)));
         }
 
+        public void setSoftInputMode() {
+        }
+
         private void emitFinishEvent(WebView webView, String url) {
             dispatchEvent(
                     webView,
@@ -650,7 +653,8 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
 
             case COMMAND_SET_SOFT_INPUT_MODE:
             // args.getString(0)
-                this.setSoftInputMode();
+                root.setSoftInputMode();
+                // this.setSoftInputMode();
                 break;
 
             case COMMAND_RESTORE_SOFT_INPUT_MODE:
