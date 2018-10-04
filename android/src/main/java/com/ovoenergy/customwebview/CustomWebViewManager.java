@@ -402,7 +402,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setDomStorageEnabled(true);
         Activity activity = reactContext.getCurrentActivity();
-        activity.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         //@MARK Modification: Add new download listener
         webView.setDownloadListener(new DownloadListener() {
