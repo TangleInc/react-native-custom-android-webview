@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.WindowManager;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
@@ -28,6 +29,10 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.util.Log;
 
 import com.facebook.common.logging.FLog;
 import com.facebook.react.bridge.Arguments;
@@ -109,6 +114,16 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     public static final int COMMAND_STOP_LOADING = 4;
     public static final int COMMAND_POST_MESSAGE = 5;
     public static final int COMMAND_INJECT_JAVASCRIPT = 6;
+    public static final int COMMAND_SET_SOFT_INPUT_MODE = 7;
+    public static final int COMMAND_RESTORE_SOFT_INPUT_MODE = 8;
+
+    private
+    @Nullable
+    Integer prevSoftInputMode = null;
+
+    private
+    @Nullable
+    Activity currentActivity = null;
 
     // Use `webView.loadUrl("about:blank")` to reliably reset the view
     // state and release page resources (including any running JavaScript).
@@ -251,6 +266,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         private
         @Nullable
         String injectedJS;
+
         private boolean messagingEnabled = false;
 
         private class ReactWebViewBridge {
@@ -392,6 +408,8 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setDomStorageEnabled(true);
+
+        this.currentActivity = reactContext.getCurrentActivity();
 
         //@MARK Modification: Add new download listener
         webView.setDownloadListener(new DownloadListener() {
@@ -579,14 +597,18 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     public
     @Nullable
     Map<String, Integer> getCommandsMap() {
-        return MapBuilder.of(
-                "goBack", COMMAND_GO_BACK,
-                "goForward", COMMAND_GO_FORWARD,
-                "reload", COMMAND_RELOAD,
-                "stopLoading", COMMAND_STOP_LOADING,
-                "postMessage", COMMAND_POST_MESSAGE,
-                "injectJavaScript", COMMAND_INJECT_JAVASCRIPT
-        );
+        Map<String, Integer> map = MapBuilder.of();
+
+        map.put("goBack", COMMAND_GO_BACK);
+        map.put("goForward", COMMAND_GO_FORWARD);
+        map.put("reload", COMMAND_RELOAD);
+        map.put("stopLoading", COMMAND_STOP_LOADING);
+        map.put("postMessage", COMMAND_POST_MESSAGE);
+        map.put("injectJavaScript", COMMAND_INJECT_JAVASCRIPT);
+        map.put("setSoftInputMode", COMMAND_SET_SOFT_INPUT_MODE);
+        map.put("restoreSoftInputMode", COMMAND_RESTORE_SOFT_INPUT_MODE);
+
+        return map;
     }
 
     @Override
@@ -626,14 +648,55 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
             case COMMAND_INJECT_JAVASCRIPT:
                 root.loadUrl("javascript:" + args.getString(0));
                 break;
+
+            case COMMAND_SET_SOFT_INPUT_MODE:
+                this.setSoftInputMode(args.getString(0));
+                break;
+
+            case COMMAND_RESTORE_SOFT_INPUT_MODE:
+                this.restoreSoftInputMode();
+                break;
         }
     }
 
     @Override
     public void onDropViewInstance(WebView webView) {
         super.onDropViewInstance(webView);
+
         ((ThemedReactContext) webView.getContext()).removeLifecycleEventListener((FilteringReactWebView) webView);
         ((FilteringReactWebView) webView).cleanupCallbacksAndDestroy();
+    }
+
+    public void setSoftInputMode(String strSoftInputMode) {
+        Integer softInputMode = null;
+
+        switch (strSoftInputMode) {
+            case "adjustResize":
+                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
+                break;
+
+            case "adjustPan":
+                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
+                break;
+
+            case "adjustNothing":
+                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING;
+                break;
+        }
+
+        int currentSoftInputMode = this.currentActivity.getWindow().getAttributes().softInputMode;
+
+        if (softInputMode != null && softInputMode != currentSoftInputMode && this.currentActivity != null) {
+            this.prevSoftInputMode = currentSoftInputMode;
+            this.currentActivity.getWindow().setSoftInputMode(softInputMode);
+        }
+    }
+
+    public void restoreSoftInputMode() {
+        if (this.prevSoftInputMode != null && this.currentActivity != null) {
+            this.currentActivity.getWindow().setSoftInputMode(this.prevSoftInputMode);
+            this.prevSoftInputMode = null;
+        }
     }
 
     private WebView.PictureListener getPictureListener() {
