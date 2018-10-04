@@ -666,7 +666,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
 
     public void setSoftInputMode(string strSoftInputMode) {
         Integer softInputMode = null;
-        switch (strSortInputMode) {
+        switch (strSoftInputMode) {
             case "adjustResize":
                 softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
                 break;
