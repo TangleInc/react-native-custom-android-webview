@@ -235,9 +235,6 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
                             createWebViewEvent(webView, url)));
         }
 
-        public void setSoftInputMode() {
-        }
-
         private void emitFinishEvent(WebView webView, String url) {
             dispatchEvent(
                     webView,
@@ -307,6 +304,9 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         @Override
         public void onHostDestroy() {
             cleanupCallbacksAndDestroy();
+        }
+
+        public void setSoftInputMode() {
         }
 
         public void setInjectedJavaScript(@Nullable String js) {
