@@ -119,7 +119,9 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     @Nullable
     WebView.PictureListener mPictureListener;
 
-    private int mPrevSoftInputMode = getActivity().getWindow().getAttributes().softInputMode;
+    private
+    @Nullable
+    Integer prevSoftInputMode = null;
 
     //@MARK Modification
     private FilteringHelper filteringHelper = new FilteringHelper(Collections.emptyList());
@@ -253,6 +255,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         private
         @Nullable
         String injectedJS;
+
         private boolean messagingEnabled = false;
 
         private class ReactWebViewBridge {
@@ -428,7 +431,8 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     @ReactProp(name = "softInputMode")
     public void setWindowSoftInputMode(WebView view, string softInputMode) {
         if (softInputMode == "adjustResize") {
-            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            this.prevSoftInputMode = this.getContext().getWindow().getAttributes().softInputMode;
+            this.getContext().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         }
     }
 
@@ -641,7 +645,11 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     @Override
     public void onDropViewInstance(WebView webView) {
         super.onDropViewInstance(webView);
-        getActivity().getWindow().setSoftInputMode(this.mSoftInputMode);
+
+        if (this.prevSoftInputMode != null) {
+            this.getContext().getWindow().setSoftInputMode(this.prevSoftInputMode);
+        }
+
         ((ThemedReactContext) webView.getContext()).removeLifecycleEventListener((FilteringReactWebView) webView);
         ((FilteringReactWebView) webView).cleanupCallbacksAndDestroy();
     }
