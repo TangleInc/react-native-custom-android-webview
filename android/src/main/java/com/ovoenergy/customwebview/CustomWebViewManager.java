@@ -32,6 +32,7 @@ import android.webkit.WebViewClient;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.util.Log;
 
 import com.facebook.common.logging.FLog;
 import com.facebook.react.bridge.Arguments;
@@ -669,7 +670,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     public void setSoftInputMode(String strSoftInputMode) {
         Integer softInputMode = null;
 
-        FLog.w(ReactConstants.TAG, "set softInputMode: " + strSoftInputMode + "; prev: " + this.prevSoftInputMode);
+        Log.w("MyShit", "set softInputMode: " + strSoftInputMode + "; prev: " + this.prevSoftInputMode);
 
         switch (strSoftInputMode) {
             case "adjustResize":
@@ -686,17 +687,17 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         }
 
         if (softInputMode != null && softInputMode != this.prevSoftInputMode && this.currentActivity != null) {
-            FLog.w(ReactConstants.TAG, "set softInputMode: actual set");
+            Log.w("MyShit", "set softInputMode: actual set");
             this.prevSoftInputMode = this.currentActivity.getWindow().getAttributes().softInputMode;
             this.currentActivity.getWindow().setSoftInputMode(softInputMode);
         }
     }
 
     public void restoreSoftInputMode() {
-        FLog.w(ReactConstants.TAG, "restore softInputMode: " + this.prevSoftInputMode);
+        Log.w("MyShit", "restore softInputMode: " + this.prevSoftInputMode);
 
         if (this.prevSoftInputMode != null && this.currentActivity != null) {
-            FLog.w(ReactConstants.TAG, "restore softInputMode: actual restore");
+            Log.w("MyShit", "restore softInputMode: actual restore");
             this.currentActivity.getWindow().setSoftInputMode(this.prevSoftInputMode);
             this.prevSoftInputMode = null;
         }
