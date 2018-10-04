@@ -667,7 +667,10 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     }
 
     public void setSoftInputMode(String strSoftInputMode) {
-        Integer softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
+        Integer softInputMode = null;
+
+        FLog.d("set softInputMode: " + strSoftInputMode + "; prev: " + this.prevSoftInputMode);
+
         switch (strSoftInputMode) {
             case "adjustResize":
                 softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
@@ -683,14 +686,18 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         }
 
         if (softInputMode != null && softInputMode != this.prevSoftInputMode && this.currentActivity != null) {
+            FLog.d("set softInputMode: actual set");
             this.prevSoftInputMode = this.currentActivity.getWindow().getAttributes().softInputMode;
             this.currentActivity.getWindow().setSoftInputMode(softInputMode);
         }
     }
 
     public void restoreSoftInputMode() {
-        if (/*this.prevSoftInputMode != null && */this.currentActivity != null) {
-            this.currentActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        FLog.d("restore softInputMode: " + this.prevSoftInputMode");
+
+        if (this.prevSoftInputMode != null && this.currentActivity != null) {
+            FLog.d("restore softInputMode: actual restore");
+            this.currentActivity.getWindow().setSoftInputMode(this.prevSoftInputMode);
             this.prevSoftInputMode = null;
         }
     }
