@@ -596,16 +596,18 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     public
     @Nullable
     Map<String, Integer> getCommandsMap() {
-        return MapBuilder.of(
-                "goBack", COMMAND_GO_BACK,
-                "goForward", COMMAND_GO_FORWARD,
-                "reload", COMMAND_RELOAD,
-                "stopLoading", COMMAND_STOP_LOADING,
-                "postMessage", COMMAND_POST_MESSAGE,
-                "injectJavaScript", COMMAND_INJECT_JAVASCRIPT,
-                "setSoftInputMode", COMMAND_SET_SOFT_INPUT_MODE,
-                "restoreSoftInputMode", COMMAND_RESTORE_SOFT_INPUT_MODE
-        );
+        Map<String, Integer> map = MapBuilder.of()
+
+        map.put("goBack", COMMAND_GO_BACK);
+        map.put("goForward", COMMAND_GO_FORWARD);
+        map.put("reload", COMMAND_RELOAD);
+        map.put("stopLoading", COMMAND_STOP_LOADING);
+        map.put("postMessage", COMMAND_POST_MESSAGE);
+        map.put("injectJavaScript", COMMAND_INJECT_JAVASCRIPT);
+        map.put("setSoftInputMode", COMMAND_SET_SOFT_INPUT_MODE);
+        map.put("restoreSoftInputMode", COMMAND_RESTORE_SOFT_INPUT_MODE);
+
+        return map;
     }
 
     @Override
@@ -664,7 +666,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         ((FilteringReactWebView) webView).cleanupCallbacksAndDestroy();
     }
 
-    public void setSoftInputMode(string strSoftInputMode) {
+    public void setSoftInputMode(String strSoftInputMode) {
         Integer softInputMode = null;
         switch (strSoftInputMode) {
             case "adjustResize":
