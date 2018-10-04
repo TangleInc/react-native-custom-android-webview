@@ -653,7 +653,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
 
             case COMMAND_SET_SOFT_INPUT_MODE:
             // args.getString(0)
-                root.setSoftInputMode();
+                ((FilteringReactWebView) root).setSoftInputMode();
                 // this.setSoftInputMode();
                 break;
 
