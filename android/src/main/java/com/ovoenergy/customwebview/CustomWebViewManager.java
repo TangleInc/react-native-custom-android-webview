@@ -119,6 +119,8 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     @Nullable
     WebView.PictureListener mPictureListener;
 
+    private int mPrevSoftInputMode = getActivity().getWindow().getAttributes().softInputMode;
+
     //@MARK Modification
     private FilteringHelper filteringHelper = new FilteringHelper(Collections.emptyList());
     private CustomTabsHelper customTabsHelper = new CustomTabsHelper();
@@ -423,6 +425,13 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         view.getSettings().setTextZoom(textZoom);
     }
 
+    @ReactProp(name = "softInputMode")
+    public void setWindowSoftInputMode(WebView view, string softInputMode) {
+        if (softInputMode == 'adjustResize') {
+            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
+    }
+
     @ReactProp(name = "thirdPartyCookiesEnabled")
     public void setThirdPartyCookiesEnabled(WebView view, boolean enabled) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -632,6 +641,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     @Override
     public void onDropViewInstance(WebView webView) {
         super.onDropViewInstance(webView);
+        getActivity().getWindow().setSoftInputMode(this.mSoftInputMode);
         ((ThemedReactContext) webView.getContext()).removeLifecycleEventListener((FilteringReactWebView) webView);
         ((FilteringReactWebView) webView).cleanupCallbacksAndDestroy();
     }

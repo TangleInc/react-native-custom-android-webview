@@ -129,6 +129,11 @@ class WebView extends React.Component {
 		 */
 		textZoom: PropTypes.number,
 
+        /**
+		 * Sets windowSoftInputMode.
+		 */
+		softInputMode: PropTypes.string,
+
 		/**
      * Used on Android Lollipop and above only, third party cookies are enabled
      * by default for WebView on Android Kitkat and below and on iOS
