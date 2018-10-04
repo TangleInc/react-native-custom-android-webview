@@ -427,7 +427,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
 
     @ReactProp(name = "softInputMode")
     public void setWindowSoftInputMode(WebView view, string softInputMode) {
-        if (softInputMode == 'adjustResize') {
+        if (softInputMode == "adjustResize") {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         }
     }
