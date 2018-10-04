@@ -684,7 +684,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
                 break;
         }
 
-        int currentSoftInputMode = this.currentActivity.getWindow().getAttributes().softInputMode
+        int currentSoftInputMode = this.currentActivity.getWindow().getAttributes().softInputMode;
 
         Log.w("MyShit", "set softInputMode: " + strSoftInputMode + "; prev: " + this.prevSoftInputMode + "; current: " + currentSoftInputMode);
 
