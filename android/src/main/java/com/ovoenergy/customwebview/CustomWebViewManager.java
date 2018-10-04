@@ -669,7 +669,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     public void setSoftInputMode(String strSoftInputMode) {
         Integer softInputMode = null;
 
-        FLog.d("set softInputMode: " + strSoftInputMode + "; prev: " + this.prevSoftInputMode);
+        FLog.d(ReactConstants.TAG, "set softInputMode: " + strSoftInputMode + "; prev: " + this.prevSoftInputMode);
 
         switch (strSoftInputMode) {
             case "adjustResize":
@@ -686,17 +686,17 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         }
 
         if (softInputMode != null && softInputMode != this.prevSoftInputMode && this.currentActivity != null) {
-            FLog.d("set softInputMode: actual set");
+            FLog.d(ReactConstants.TAG, "set softInputMode: actual set");
             this.prevSoftInputMode = this.currentActivity.getWindow().getAttributes().softInputMode;
             this.currentActivity.getWindow().setSoftInputMode(softInputMode);
         }
     }
 
     public void restoreSoftInputMode() {
-        FLog.d("restore softInputMode: " + this.prevSoftInputMode);
+        FLog.d(ReactConstants.TAG, "restore softInputMode: " + this.prevSoftInputMode);
 
         if (this.prevSoftInputMode != null && this.currentActivity != null) {
-            FLog.d("restore softInputMode: actual restore");
+            FLog.d(ReactConstants.TAG, "restore softInputMode: actual restore");
             this.currentActivity.getWindow().setSoftInputMode(this.prevSoftInputMode);
             this.prevSoftInputMode = null;
         }
