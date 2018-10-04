@@ -114,6 +114,10 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     public static final int COMMAND_POST_MESSAGE = 5;
     public static final int COMMAND_INJECT_JAVASCRIPT = 6;
 
+    private
+    @Nullable
+    Integer prevSoftInputMode = null;
+
     // Use `webView.loadUrl("about:blank")` to reliably reset the view
     // state and release page resources (including any running JavaScript).
     private static final String BLANK_URL = "about:blank";
@@ -122,10 +126,6 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     private
     @Nullable
     WebView.PictureListener mPictureListener;
-
-    private
-    @Nullable
-    Integer prevSoftInputMode = null;
 
     //@MARK Modification
     private FilteringHelper filteringHelper = new FilteringHelper(Collections.emptyList());
@@ -401,7 +401,9 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setDomStorageEnabled(true);
+
         Activity activity = reactContext.getCurrentActivity();
+        this.prevSoftInputMode = activity.getWindow().getAttributes().softInputMode;
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         //@MARK Modification: Add new download listener
@@ -432,27 +434,6 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     @ReactProp(name = "textZoom")
     public void setTextZoom(WebView view, int textZoom) {
         view.getSettings().setTextZoom(textZoom);
-    }
-
-    private Activity getActivity(WebView view) {
-        Context context = view.getContext();
-        while (context instanceof ContextWrapper) {
-            if (context instanceof Activity) {
-                return (Activity)context;
-            }
-            context = ((ContextWrapper)context).getBaseContext();
-        }
-        return null;
-    }
-
-    @ReactProp(name = "softInputMode")
-    public void setWindowSoftInputMode(WebView view, String softInputMode) {
-        FLog.d(ReactConstants.TAG, "setWindowSoftInputMode called");
-
-        FLog.d(ReactConstants.TAG, "adjustResize");
-        Activity activity = ((ThemedReactContext) view.getContext()).getCurrentActivity();
-        this.prevSoftInputMode = activity.getWindow().getAttributes().softInputMode;
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
     @ReactProp(name = "thirdPartyCookiesEnabled")
@@ -666,7 +647,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         super.onDropViewInstance(webView);
 
         if (this.prevSoftInputMode != null) {
-            Activity activity = getActivity(webView);
+            Activity activity = ((ThemedReactContext) webView.getContext()).getCurrentActivity();
             activity.getWindow().setSoftInputMode(this.prevSoftInputMode);
         }
 
