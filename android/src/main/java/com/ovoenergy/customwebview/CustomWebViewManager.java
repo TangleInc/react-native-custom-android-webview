@@ -448,7 +448,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         FLog.d(ReactConstants.TAG, "setWindowSoftInputMode called");
 
         FLog.d(ReactConstants.TAG, "adjustResize");
-        Activity activity = getActivity(view);
+        Activity activity = ((ThemedReactContext) view.getContext()).getCurrentActivity();
         this.prevSoftInputMode = activity.getWindow().getAttributes().softInputMode;
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
