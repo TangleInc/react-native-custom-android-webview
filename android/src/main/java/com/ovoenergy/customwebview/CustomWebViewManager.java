@@ -29,6 +29,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 
 import com.facebook.common.logging.FLog;
 import com.facebook.react.bridge.Arguments;
@@ -441,7 +444,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     }
 
     @ReactProp(name = "softInputMode")
-    public void setWindowSoftInputMode(WebView view, string softInputMode) {
+    public void setWindowSoftInputMode(WebView view, String softInputMode) {
         if (softInputMode == "adjustResize") {
             Activity activity = getActivity(view);
             this.prevSoftInputMode = activity.getWindow().getAttributes().softInputMode;
@@ -660,7 +663,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         super.onDropViewInstance(webView);
 
         if (this.prevSoftInputMode != null) {
-            Activity activity = getActivity(view);
+            Activity activity = getActivity(webView);
             activity.getWindow().setSoftInputMode(this.prevSoftInputMode);
         }
 
