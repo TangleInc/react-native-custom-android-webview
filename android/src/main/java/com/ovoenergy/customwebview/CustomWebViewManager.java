@@ -649,7 +649,8 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
                 break;
 
             case COMMAND_SET_SOFT_INPUT_MODE:
-                this.setSoftInputMode(args.getString(0));
+            // args.getString(0)
+                this.setSoftInputMode();
                 break;
 
             case COMMAND_RESTORE_SOFT_INPUT_MODE:
@@ -666,9 +667,9 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         ((FilteringReactWebView) webView).cleanupCallbacksAndDestroy();
     }
 
-    public void setSoftInputMode(String strSoftInputMode) {
-        Integer softInputMode = null;
-        switch (strSoftInputMode) {
+    public void setSoftInputMode(/*String strSoftInputMode*/) {
+        Integer softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
+        /*switch (strSoftInputMode) {
             case "adjustResize":
                 softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
                 break;
@@ -680,7 +681,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
             case "adjustNothing":
                 softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING;
                 break;
-        }
+        }*/
 
         if (softInputMode != null && this.currentActivity != null) {
             this.prevSoftInputMode = this.currentActivity.getWindow().getAttributes().softInputMode;

@@ -431,7 +431,7 @@ class WebView extends React.Component {
 		UIManager.dispatchViewManagerCommand(
 			this.getWebViewHandle(),
 			UIManager.RCTWebView.Commands.setSoftInputMode,
-			[strSoftInputMode]
+			null, //[strSoftInputMode]
 		);
 	};
 
