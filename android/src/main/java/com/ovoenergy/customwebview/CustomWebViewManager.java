@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.WindowManager;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
@@ -428,11 +429,23 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         view.getSettings().setTextZoom(textZoom);
     }
 
+    private Activity getActivity(WebView view) {
+        Context context = view.getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity)context;
+            }
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+        return null;
+    }
+
     @ReactProp(name = "softInputMode")
     public void setWindowSoftInputMode(WebView view, string softInputMode) {
         if (softInputMode == "adjustResize") {
-            this.prevSoftInputMode = this.getContext().getWindow().getAttributes().softInputMode;
-            this.getContext().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            Activity activity = getActivity(view);
+            this.prevSoftInputMode = activity.getWindow().getAttributes().softInputMode;
+            activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         }
     }
 
@@ -647,7 +660,8 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         super.onDropViewInstance(webView);
 
         if (this.prevSoftInputMode != null) {
-            this.getContext().getWindow().setSoftInputMode(this.prevSoftInputMode);
+            Activity activity = getActivity(view);
+            activity.getWindow().setSoftInputMode(this.prevSoftInputMode);
         }
 
         ((ThemedReactContext) webView.getContext()).removeLifecycleEventListener((FilteringReactWebView) webView);
