@@ -12,6 +12,9 @@ public class FilteringHelper {
     }
 
     public boolean shouldOpenInternally(String urlString) {
+        if (this.openInternallyHosts.size() == 0) {
+            return true;
+        }
         URI uri = URI.create(urlString);
 
         return this.openInternallyHosts.contains(uri.getHost());
