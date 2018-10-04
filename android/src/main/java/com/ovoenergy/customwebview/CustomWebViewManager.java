@@ -118,6 +118,10 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     @Nullable
     Integer prevSoftInputMode = null;
 
+    private
+    @Nullable
+    Activity currentActivity = null;
+
     // Use `webView.loadUrl("about:blank")` to reliably reset the view
     // state and release page resources (including any running JavaScript).
     private static final String BLANK_URL = "about:blank";
@@ -402,9 +406,9 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setDomStorageEnabled(true);
 
-        Activity activity = reactContext.getCurrentActivity();
-        this.prevSoftInputMode = activity.getWindow().getAttributes().softInputMode;
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        this.currentActivity = reactContext.getCurrentActivity();
+        this.prevSoftInputMode = this.currentActivity.getWindow().getAttributes().softInputMode;
+        this.currentActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         //@MARK Modification: Add new download listener
         webView.setDownloadListener(new DownloadListener() {
@@ -646,10 +650,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     public void onDropViewInstance(WebView webView) {
         super.onDropViewInstance(webView);
 
-        if (this.prevSoftInputMode != null) {
-            Activity activity = ((ThemedReactContext) webView.getContext()).getCurrentActivity();
-            activity.getWindow().setSoftInputMode(this.prevSoftInputMode);
-        }
+        this.currentActivity.getWindow().setSoftInputMode(this.prevSoftInputMode);
 
         ((ThemedReactContext) webView.getContext()).removeLifecycleEventListener((FilteringReactWebView) webView);
         ((FilteringReactWebView) webView).cleanupCallbacksAndDestroy();
