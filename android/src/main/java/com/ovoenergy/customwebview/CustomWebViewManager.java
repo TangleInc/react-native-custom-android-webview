@@ -445,11 +445,12 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
 
     @ReactProp(name = "softInputMode")
     public void setWindowSoftInputMode(WebView view, String softInputMode) {
-        if (softInputMode == "adjustResize") {
-            Activity activity = getActivity(view);
-            this.prevSoftInputMode = activity.getWindow().getAttributes().softInputMode;
-            activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        }
+        FLog.d(ReactConstants.TAG, "setWindowSoftInputMode called");
+
+        FLog.d(ReactConstants.TAG, "adjustResize");
+        Activity activity = getActivity(view);
+        this.prevSoftInputMode = activity.getWindow().getAttributes().softInputMode;
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
     @ReactProp(name = "thirdPartyCookiesEnabled")
