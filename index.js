@@ -428,13 +428,10 @@ class WebView extends React.Component {
 		ReactNative.findNodeHandle(this.refs[RCT_WEBVIEW_REF]);
 
 	setSoftInputMode = (strSoftInputMode) => {
-		console.log('UIManager.RCTWebView.Commands.setSoftInputMode', UIManager.RCTWebView.Commands.setSoftInputMode)
-		console.log('this.getWebViewHandle()', this.getWebViewHandle())
-
 		UIManager.dispatchViewManagerCommand(
 			this.getWebViewHandle(),
 			UIManager.RNCustomWebView.Commands.setSoftInputMode,
-			null, //[strSoftInputMode]
+			[strSoftInputMode]
 		);
 	};
 
