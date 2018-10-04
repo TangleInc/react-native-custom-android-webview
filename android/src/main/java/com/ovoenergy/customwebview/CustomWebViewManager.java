@@ -604,7 +604,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
                 "postMessage", COMMAND_POST_MESSAGE,
                 "injectJavaScript", COMMAND_INJECT_JAVASCRIPT,
                 "setSoftInputMode", COMMAND_SET_SOFT_INPUT_MODE,
-                "restoreSoftInputMode", COMMAND_RESTORE_SOFT_INPUT_MODE,
+                "restoreSoftInputMode", COMMAND_RESTORE_SOFT_INPUT_MODE
         );
     }
 
@@ -668,15 +668,15 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         Integer softInputMode = null;
         switch (strSortInputMode) {
             case "adjustResize":
-                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
                 break;
 
             case "adjustPan":
-                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
                 break;
 
             case "adjustNothing":
-                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING
+                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING;
                 break;
         }
 
