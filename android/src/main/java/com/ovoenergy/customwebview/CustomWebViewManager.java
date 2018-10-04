@@ -113,6 +113,8 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     public static final int COMMAND_STOP_LOADING = 4;
     public static final int COMMAND_POST_MESSAGE = 5;
     public static final int COMMAND_INJECT_JAVASCRIPT = 6;
+    public static final int COMMAND_SET_SOFT_INPUT_MODE = 7;
+    public static final int COMMAND_RESTORE_SOFT_INPUT_MODE = 8;
 
     private
     @Nullable
@@ -407,8 +409,6 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         webView.getSettings().setDomStorageEnabled(true);
 
         this.currentActivity = reactContext.getCurrentActivity();
-        this.prevSoftInputMode = this.currentActivity.getWindow().getAttributes().softInputMode;
-        this.currentActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         //@MARK Modification: Add new download listener
         webView.setDownloadListener(new DownloadListener() {
@@ -602,7 +602,9 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
                 "reload", COMMAND_RELOAD,
                 "stopLoading", COMMAND_STOP_LOADING,
                 "postMessage", COMMAND_POST_MESSAGE,
-                "injectJavaScript", COMMAND_INJECT_JAVASCRIPT
+                "injectJavaScript", COMMAND_INJECT_JAVASCRIPT,
+                "setSoftInputMode", COMMAND_SET_SOFT_INPUT_MODE,
+                "restoreSoftInputMode", COMMAND_RESTORE_SOFT_INPUT_MODE,
         );
     }
 
@@ -643,6 +645,14 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
             case COMMAND_INJECT_JAVASCRIPT:
                 root.loadUrl("javascript:" + args.getString(0));
                 break;
+
+            case COMMAND_SET_SOFT_INPUT_MODE:
+                this.setSoftInputMode(args.getString(0));
+                break;
+
+            case COMMAND_RESTORE_SOFT_INPUT_MODE:
+                this.restoreSoftInputMode();
+                break;
         }
     }
 
@@ -650,10 +660,36 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     public void onDropViewInstance(WebView webView) {
         super.onDropViewInstance(webView);
 
-        this.currentActivity.getWindow().setSoftInputMode(this.prevSoftInputMode);
-
         ((ThemedReactContext) webView.getContext()).removeLifecycleEventListener((FilteringReactWebView) webView);
         ((FilteringReactWebView) webView).cleanupCallbacksAndDestroy();
+    }
+
+    public void setSoftInputMode(string strSoftInputMode) {
+        Integer softInputMode = null;
+        switch (strSortInputMode) {
+            case "adjustResize":
+                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+                break;
+
+            case "adjustPan":
+                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+                break;
+
+            case "adjustNothing":
+                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING
+                break;
+        }
+
+        if (softInputMode != null && this.currentActivity != null) {
+            this.prevSoftInputMode = this.currentActivity.getWindow().getAttributes().softInputMode;
+            this.currentActivity.getWindow().setSoftInputMode(softInputMode);
+        }
+    }
+
+    public void restoreSoftInputMode() {
+        if (this.prevSoftInputMode != null && this.currentActivity != null) {
+            this.currentActivity.getWindow().setSoftInputMode(this.prevSoftInputMode);
+        }
     }
 
     private WebView.PictureListener getPictureListener() {

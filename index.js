@@ -76,52 +76,52 @@ class WebView extends React.Component {
 		url: deprecatedPropType(PropTypes.string, 'Use the `source` prop instead.'),
 
 		/**
-     * Loads static html or a uri (with optional headers) in the WebView.
-     */
+	 * Loads static html or a uri (with optional headers) in the WebView.
+	 */
 		source: PropTypes.oneOfType([
 			PropTypes.shape({
 				/*
-         * The URI to load in the WebView. Can be a local or remote file.
-         */
+		 * The URI to load in the WebView. Can be a local or remote file.
+		 */
 				uri: PropTypes.string,
 				/*
-         * The HTTP Method to use. Defaults to GET if not specified.
-         * NOTE: On Android, only GET and POST are supported.
-         */
+		 * The HTTP Method to use. Defaults to GET if not specified.
+		 * NOTE: On Android, only GET and POST are supported.
+		 */
 				method: PropTypes.oneOf(['GET', 'POST']),
 				/*
-         * Additional HTTP headers to send with the request.
-         * NOTE: On Android, this can only be used with GET requests.
-         */
+		 * Additional HTTP headers to send with the request.
+		 * NOTE: On Android, this can only be used with GET requests.
+		 */
 				headers: PropTypes.object,
 				/*
-         * The HTTP body to send with the request. This must be a valid
-         * UTF-8 string, and will be sent exactly as specified, with no
-         * additional encoding (e.g. URL-escaping or base64) applied.
-         * NOTE: On Android, this can only be used with POST requests.
-         */
+		 * The HTTP body to send with the request. This must be a valid
+		 * UTF-8 string, and will be sent exactly as specified, with no
+		 * additional encoding (e.g. URL-escaping or base64) applied.
+		 * NOTE: On Android, this can only be used with POST requests.
+		 */
 				body: PropTypes.string
 			}),
 			PropTypes.shape({
 				/*
-         * A static HTML page to display in the WebView.
-         */
+		 * A static HTML page to display in the WebView.
+		 */
 				html: PropTypes.string,
 				/*
-         * The base URL to be used for any relative links in the HTML.
-         */
+		 * The base URL to be used for any relative links in the HTML.
+		 */
 				baseUrl: PropTypes.string
 			}),
 			/*
-       * Used internally by packager.
-       */
+	   * Used internally by packager.
+	   */
 			PropTypes.number
 		]),
 
 		/**
-     * Used on Android only, JS is enabled by default for WebView on iOS
-     * @platform android
-     */
+	 * Used on Android only, JS is enabled by default for WebView on iOS
+	 * @platform android
+	 */
 		javaScriptEnabled: PropTypes.bool,
 
 		/**
@@ -129,81 +129,81 @@ class WebView extends React.Component {
 		 */
 		textZoom: PropTypes.number,
 
-        /**
+		/**
 		 * Sets windowSoftInputMode.
 		 */
 		softInputMode: PropTypes.string,
 
 		/**
-     * Used on Android Lollipop and above only, third party cookies are enabled
-     * by default for WebView on Android Kitkat and below and on iOS
-     * @platform android
-     */
+	 * Used on Android Lollipop and above only, third party cookies are enabled
+	 * by default for WebView on Android Kitkat and below and on iOS
+	 * @platform android
+	 */
 		thirdPartyCookiesEnabled: PropTypes.bool,
 
 		/**
-     * Used on Android only, controls whether DOM Storage is enabled or not
-     * @platform android
-     */
+	 * Used on Android only, controls whether DOM Storage is enabled or not
+	 * @platform android
+	 */
 		domStorageEnabled: PropTypes.bool,
 
 		/**
-     * Sets the JS to be injected when the webpage loads.
-     */
+	 * Sets the JS to be injected when the webpage loads.
+	 */
 		injectedJavaScript: PropTypes.string,
 
 		/**
-     * Sets whether the webpage scales to fit the view and the user can change the scale.
-     */
+	 * Sets whether the webpage scales to fit the view and the user can change the scale.
+	 */
 		scalesPageToFit: PropTypes.bool,
 
 		/**
-     * Sets the user-agent for this WebView. The user-agent can also be set in native using
-     * WebViewConfig. This prop will overwrite that config.
-     */
+	 * Sets the user-agent for this WebView. The user-agent can also be set in native using
+	 * WebViewConfig. This prop will overwrite that config.
+	 */
 		userAgent: PropTypes.string,
 
 		/**
-     * Used to locate this view in end-to-end tests.
-     */
+	 * Used to locate this view in end-to-end tests.
+	 */
 		testID: PropTypes.string,
 
 		/**
-     * Determines whether HTML5 audio & videos require the user to tap before they can
-     * start playing. The default value is `false`.
-     */
+	 * Determines whether HTML5 audio & videos require the user to tap before they can
+	 * start playing. The default value is `false`.
+	 */
 		mediaPlaybackRequiresUserAction: PropTypes.bool,
 
 		/**
-     * Boolean that sets whether JavaScript running in the context of a file
-     * scheme URL should be allowed to access content from any origin.
-     * Including accessing content from other file scheme URLs
-     * @platform android
-     */
+	 * Boolean that sets whether JavaScript running in the context of a file
+	 * scheme URL should be allowed to access content from any origin.
+	 * Including accessing content from other file scheme URLs
+	 * @platform android
+	 */
 		allowUniversalAccessFromFileURLs: PropTypes.bool,
 
 		/**
-     * Function that accepts a string that will be passed to the WebView and
-     * executed immediately as JavaScript.
-     */
+	 * Function that accepts a string that will be passed to the WebView and
+	 * executed immediately as JavaScript.
+	 */
 		injectJavaScript: PropTypes.func,
 
 		/**
-     * Specifies the mixed content mode. i.e WebView will allow a secure origin to load content from any other origin.
-     *
-     * Possible values for `mixedContentMode` are:
-     *
-     * - `'never'` (default) - WebView will not allow a secure origin to load content from an insecure origin.
-     * - `'always'` - WebView will allow a secure origin to load content from any other origin, even if that origin is insecure.
-     * - `'compatibility'` -  WebView will attempt to be compatible with the approach of a modern web browser with regard to mixed content.
-     * @platform android
-     */
+	 * Specifies the mixed content mode. i.e WebView will allow a secure origin to load content from any other origin.
+	 *
+	 * Possible values for `mixedContentMode` are:
+	 *
+	 * - `'never'` (default) - WebView will not allow a secure origin to load content from an insecure origin.
+	 * - `'always'` - WebView will allow a secure origin to load content from any other origin, even if that origin is insecure.
+	 * - `'compatibility'` -  WebView will attempt to be compatible with the approach of a modern web browser with regard to mixed content.
+	 * @platform android
+	 */
 		mixedContentMode: PropTypes.oneOf(['never', 'always', 'compatibility']),
 
 		/**
-     * Used on Android only, controls whether form autocomplete data should be saved
-     * @platform android
-     */
+	 * Used on Android only, controls whether form autocomplete data should be saved
+	 * @platform android
+	 */
 		saveFormDataDisabled: PropTypes.bool,
 
 		// New prop to set whitelist of domains to open internally in webview
@@ -213,32 +213,32 @@ class WebView extends React.Component {
 		toolbarColour: PropTypes.string,
 
 		/**
-     * Override the native component used to render the WebView. Enables a custom native
-     * WebView which uses the same JavaScript as the original WebView.
-     */
+	 * Override the native component used to render the WebView. Enables a custom native
+	 * WebView which uses the same JavaScript as the original WebView.
+	 */
 		nativeConfig: PropTypes.shape({
 			/*
-       * The native component used to render the WebView.
-       */
+	   * The native component used to render the WebView.
+	   */
 			component: PropTypes.any,
 			/*
-       * Set props directly on the native component WebView. Enables custom props which the
-       * original WebView doesn't pass through.
-       */
+	   * Set props directly on the native component WebView. Enables custom props which the
+	   * original WebView doesn't pass through.
+	   */
 			props: PropTypes.object,
 			/*
-       * Set the ViewManager to use for communcation with the native side.
-       * @platform ios
-       */
+	   * Set the ViewManager to use for communcation with the native side.
+	   * @platform ios
+	   */
 			viewManager: PropTypes.object
 		}),
 		/*
-     * Used on Android only, controls whether the given list of URL prefixes should
-     * make {@link com.facebook.react.views.webview.ReactWebViewClient} to launch a
-     * default activity intent for those URL instead of loading it within the webview.
-     * Use this to list URLs that WebView cannot handle, e.g. a PDF url.
-     * @platform android
-     */
+	 * Used on Android only, controls whether the given list of URL prefixes should
+	 * make {@link com.facebook.react.views.webview.ReactWebViewClient} to launch a
+	 * default activity intent for those URL instead of loading it within the webview.
+	 * Use this to list URLs that WebView cannot handle, e.g. a PDF url.
+	 * @platform android
+	 */
 		urlPrefixesForDefaultIntent: PropTypes.arrayOf(PropTypes.string)
 	};
 
@@ -426,6 +426,22 @@ class WebView extends React.Component {
 
 	getWebViewHandle = () =>
 		ReactNative.findNodeHandle(this.refs[RCT_WEBVIEW_REF]);
+
+	setSoftInputMode = (strSoftInputMode) => {
+		UIManager.dispatchViewManagerCommand(
+			this.getWebViewHandle(),
+			UIManager.RCTWebView.Commands.setSoftInputMode,
+			[strSoftInputMode]
+		);
+	};
+
+	restoreSoftInputMode = () => {
+		UIManager.dispatchViewManagerCommand(
+			this.getWebViewHandle(),
+			UIManager.RCTWebView.Commands.restoreSoftInputMode,
+			null
+		);
+	}
 
 	onLoadingStart = event => {
 		const onLoadStart = this.props.onLoadStart;
