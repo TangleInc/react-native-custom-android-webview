@@ -108,13 +108,13 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
     private static final String HTTP_METHOD_POST = "POST";
 
     public static final int COMMAND_GO_BACK = 1;
-    public static final int COMMAND_GO_FORWARD = 7;
-    public static final int COMMAND_RELOAD = 8;
+    public static final int COMMAND_GO_FORWARD = 2;
+    public static final int COMMAND_RELOAD = 3;
     public static final int COMMAND_STOP_LOADING = 4;
     public static final int COMMAND_POST_MESSAGE = 5;
     public static final int COMMAND_INJECT_JAVASCRIPT = 6;
-    public static final int COMMAND_SET_SOFT_INPUT_MODE = 2;
-    public static final int COMMAND_RESTORE_SOFT_INPUT_MODE = 3;
+    public static final int COMMAND_SET_SOFT_INPUT_MODE = 7;
+    public static final int COMMAND_RESTORE_SOFT_INPUT_MODE = 8;
 
     private
     @Nullable
