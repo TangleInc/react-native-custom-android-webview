@@ -661,6 +661,7 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
 
     @Override
     public void onDropViewInstance(WebView webView) {
+        this.restoreSoftInputMode();
         super.onDropViewInstance(webView);
 
         ((ThemedReactContext) webView.getContext()).removeLifecycleEventListener((FilteringReactWebView) webView);
