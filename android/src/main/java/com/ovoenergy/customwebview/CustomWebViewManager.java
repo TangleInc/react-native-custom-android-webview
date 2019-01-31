@@ -119,10 +119,6 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
 
     private
     @Nullable
-    Integer prevSoftInputMode = null;
-
-    private
-    @Nullable
     Activity currentActivity = null;
 
     // Use `webView.loadUrl("about:blank")` to reliably reset the view
@@ -605,8 +601,6 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
         map.put("stopLoading", COMMAND_STOP_LOADING);
         map.put("postMessage", COMMAND_POST_MESSAGE);
         map.put("injectJavaScript", COMMAND_INJECT_JAVASCRIPT);
-        map.put("setSoftInputMode", COMMAND_SET_SOFT_INPUT_MODE);
-        map.put("restoreSoftInputMode", COMMAND_RESTORE_SOFT_INPUT_MODE);
 
         return map;
     }
@@ -648,56 +642,15 @@ public class CustomWebViewManager extends SimpleViewManager<WebView> {
             case COMMAND_INJECT_JAVASCRIPT:
                 root.loadUrl("javascript:" + args.getString(0));
                 break;
-
-            case COMMAND_SET_SOFT_INPUT_MODE:
-                this.setSoftInputMode(args.getString(0));
-                break;
-
-            case COMMAND_RESTORE_SOFT_INPUT_MODE:
-                this.restoreSoftInputMode();
-                break;
         }
     }
 
     @Override
     public void onDropViewInstance(WebView webView) {
-        this.restoreSoftInputMode();
         super.onDropViewInstance(webView);
 
         ((ThemedReactContext) webView.getContext()).removeLifecycleEventListener((FilteringReactWebView) webView);
         ((FilteringReactWebView) webView).cleanupCallbacksAndDestroy();
-    }
-
-    public void setSoftInputMode(String strSoftInputMode) {
-        Integer softInputMode = null;
-
-        switch (strSoftInputMode) {
-            case "adjustResize":
-                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
-                break;
-
-            case "adjustPan":
-                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
-                break;
-
-            case "adjustNothing":
-                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING;
-                break;
-        }
-
-        int currentSoftInputMode = this.currentActivity.getWindow().getAttributes().softInputMode;
-
-        if (softInputMode != null && softInputMode != currentSoftInputMode && this.currentActivity != null) {
-            this.prevSoftInputMode = currentSoftInputMode;
-            this.currentActivity.getWindow().setSoftInputMode(softInputMode);
-        }
-    }
-
-    public void restoreSoftInputMode() {
-        if (this.prevSoftInputMode != null && this.currentActivity != null) {
-            this.currentActivity.getWindow().setSoftInputMode(this.prevSoftInputMode);
-            this.prevSoftInputMode = null;
-        }
     }
 
     private WebView.PictureListener getPictureListener() {
